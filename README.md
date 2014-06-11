@@ -1,3 +1,3 @@
-# clmntcrl.github.com
+# clmntcrl-io
 
 Personal website.
