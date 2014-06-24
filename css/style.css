@@ -13,6 +13,7 @@ body {
 	height: 100%;
 	margin: 0 auto;
 	color: #a4abb2;
+	background-color: #fff;
 	font: 1.3em/1.6 "Avenir Next", "Avenir", 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', Tahoma, Verdana, sans-serif;
 }
 #w {
@@ -98,16 +99,27 @@ a {
 }
 .posts li a { color: inherit; }
 
+blockquote {
+	margin: 1rem 6rem;
+	color: #696e72;
+	font-style: italic;
+}
+.quote-src {
+	display: block;
+	margin-top: .3rem;
+	text-align: right;
+}
+.quote-src:before { content: "— "; }
+
 pre {
-	max-width: 900px;
 	padding: .5rem 1rem;
 	border-radius: 3px;
-	margin: 1rem auto;
+	margin: 1rem 3rem;
 	overflow-y: auto;
 	background: #f3f5f8;
-	font-family: Menlo;
 }
 code {
+	color: #89919A;
 	font: 1em/1.6 monospace;
 }
 
