@@ -21,6 +21,8 @@
 <pre><code>println("Hello, world")</code></pre>
 <p>Forget the <code>;</code> and read the following for a swift tour.</p>
 <hr />
+<p><strong>Update</strong> (Jul 15 2014) for Swift first <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html" target="_blank">revision</a>.</p>
+<hr />
 <h2 id="simple-value"><a href="#simple-value">Simple value</a></h2>
 <pre><code>let constant = 1
 var variable = 1</code></pre>
@@ -47,8 +49,8 @@ dictionary["a key"] = "I'am an element"
 
 // Empty  array or dictionary 
 
-let emptyArray = String[]()
-let emptyDictionary = Dictionary&lt;String, String&gt;()</code></pre>
+let emptyArray = [String]()
+let emptyDictionary = [String: String]()</code></pre>
 <h2 id="control-flow"><a href="#control-flow">Control flow</a></h2>
 <p>Parentheses around the condition or loop variable are optional. Braces around the body are required.</p>
 <p>Condition in an <code>if</code> statement must be a boolean expression. <code>?</code> can be used after the type of a value to mark it as optional.</p>
@@ -121,7 +123,7 @@ numbers.map { $0 * 2 }
 }
 
 var counter = Counter()
-counter.incrementBy(2, numberOfTimes: 1024)</code></pre>
+counter.incrementBy(2, numberOfTimes:1_024)</code></pre>
 <h2 id="enumerations-and-structures"><a href="#enumerations-and-structures">Enumerations and structures</a></h2>
 <p>Enumerations can have methods associated with them.</p>
 <p>An instance of an enumeration member can have values associated with the instance:</p>
@@ -170,15 +172,15 @@ class PrintableClass: PrintProtocol {
 }</pre></code>
 <p>Extensions are used to add functionality to an existing type, such as methods and computed properties. Extensions can be used to add protocol conformance to a type.</p>
 <pre><code>extension Double {
-    func abs() -> Double {
+    func modulus() -> Double {
         return abs(self)
     }
 }</code></pre>
 <h2 id="generics"><a href="#generics">Generics</a></h2>
 <p>Functions, methods, classes, enumerations and structures can be generic.</p>
-<pre><code>func repeat<T>(item: T, times: Int) -> T[] {
-    var result = T[]()
-    for i in 0..times {
+<pre><code>func repeat&lt;T&gt;(item: T, times: Int) -> [T] {
+    var result = [T]()
+    for i in 0 ..&lt; times {
         result += item
     }
     return result
@@ -186,18 +188,18 @@ class PrintableClass: PrintProtocol {
 repeat("knock", 2)</code></pre>
 <p>Type can require to implement protocol, to be the same as an other type or to have a particular superclass.</p>
 <pre><code>func anyCommonElements &lt;T, U where T: Sequence, U: Sequence,
-        T.GeneratorType.Element: Equatable,
-        T.GeneratorType.Element == U.GeneratorType.Element&gt; 
-        (lhs: T, rhs: U) -> T.GeneratorType.Element[] {
-    var result = Array&lt;T.GeneratorType.Element&gt;()
-    for lhsItem in lhs {
-        for rhsItem in rhs {
-            if lhsItem == rhsItem {
-                result += rhsItem
+    T.GeneratorType.Element: Equatable,
+    T.GeneratorType.Element == U.GeneratorType.Element&gt;
+    (lhs: T, rhs: U) -&gt; [T.GeneratorType.Element] {
+        var result = Array&lt;T.GeneratorType.Element&gt;()
+        for lhsItem in lhs {
+            for rhsItem in rhs {
+                if lhsItem == rhsItem {
+                    result += rhsItem
+                }
             }
         }
-    }
-    return result
+        return result
 }
 anyCommonElements([1, 2, 3, 4], [2, 4, 6])</code></pre>
 <hr />
