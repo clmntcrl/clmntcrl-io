@@ -187,7 +187,7 @@ class PrintableClass: PrintProtocol {
 }
 repeat("knock", 2)</code></pre>
 <p>Type can require to implement protocol, to be the same as an other type or to have a particular superclass.</p>
-<pre><code>func anyCommonElements &lt;T, U where T: Sequence, U: Sequence,
+<pre><code>func commonElements &lt;T, U where T: Sequence, U: Sequence,
     T.GeneratorType.Element: Equatable,
     T.GeneratorType.Element == U.GeneratorType.Element&gt;
     (lhs: T, rhs: U) -&gt; [T.GeneratorType.Element] {
@@ -201,7 +201,7 @@ repeat("knock", 2)</code></pre>
         }
         return result
 }
-anyCommonElements([1, 2, 3, 4], [2, 4, 6])</code></pre>
+commonElements([1, 2, 3, 4], [2, 4, 6])</code></pre>
 <hr />
 <p>It's a quick tour of Swift and there is so much to write...</p>
 			<hr />
