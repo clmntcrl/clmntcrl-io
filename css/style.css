@@ -73,9 +73,10 @@ time {
 }
 p { margin: 1em 0; }
 hr {
+	width: 45%;
 	border: none;
 	border-bottom: 1px #f3f5f8 solid;
-	margin: 2em 0;
+	margin: 2em auto;
 }
 a {
 	color: #d03e4c;
