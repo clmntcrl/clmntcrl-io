@@ -12,8 +12,8 @@ body {
 	display: table;
 	height: 100%;
 	margin: 0 auto;
-	color: #a4abb2;
-	background-color: #fff;
+	color: #c0c5cf;
+	background-color: #2b303b;
 	font: 1.3em/1.6 "Avenir Next", "Avenir", 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', Tahoma, Verdana, sans-serif;
 }
 #w {
@@ -27,7 +27,7 @@ nav {
 	position: absolute;
 	left: 2em;
 	top: 1em;
-	color: #d3d5d8;
+	color: #4f5b66;
 	font-size: .7em;
 }
 nav a { color: inherit; }
@@ -43,12 +43,12 @@ h1:before {
 	right: 103%;
 	top: 1.1em;
 	content: '#';
-	color: #d3d5d8;
+	color: #4f5b66;
 	font-size: .5em;
 	font-weight: 600;
 	text-align: right;
 }
-h1 a { color: inherit; }
+h1 a { color: #bf626b; }
 h2 {
 	position: relative;
 	margin: 2em 0 1em;
@@ -60,26 +60,30 @@ h2:before {
 	right: 103%;
 	top: 1.15em;
 	content: '##';
-	color: #d3d5d8;
+	color: #4f5b66;
 	font-size: .5em;
 	font-weight: 600;
 	text-align: right;
 }
-h2 a { color: inherit; }
+h2 a { color: #bf626b; }
 
 time {
-	color: #d3d5d8;
+	color: #4f5b66;
 	font-size: .7em;
 }
 p { margin: 1em 0; }
+strong {
+	font-weight: 700;
+	color: #8fa1b2;
+}
 hr {
 	width: 45%;
 	border: none;
-	border-bottom: 1px #f3f5f8 solid;
+	border-bottom: 1px #4f5b66 solid;
 	margin: 2em auto;
 }
 a {
-	color: #d03e4c;
+	color: #bf626b;
 	text-decoration: none;
 }
 
@@ -93,7 +97,7 @@ a {
 	right: 103%;
 	top: .5em;
 	content: '*';
-	color: #d3d5d8;
+	color: #4f5b66;
 	font-size: 1.1rem;
 	font-weight: 600;
 	text-align: right;
@@ -131,5 +135,5 @@ code {
 
 ::selection {
 	color: #fff;
-	background-color: #d03e4c;
+	background-color: #bf626b;
 }
