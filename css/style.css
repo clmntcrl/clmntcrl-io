@@ -118,10 +118,13 @@ blockquote {
 }
 .quote-src:before { content: "— "; }
 
+.gist,
+pre { 
+    padding: .5rem 1rem;
+    margin: 1rem 3rem;
+}
 pre {
-	padding: .5rem 1rem;
 	border-radius: 3px;
-	margin: 1rem 3rem;
 	overflow-y: auto;
 	background: #f0f2f5;
 }
