@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="CLÉMENT Cyril" />
+		<meta name="description" content="This is the first blog post of the « Building Echo » series. In this series I write about how I build Echo framework, the issues I encountered and how I solved them. Let's begin with Echo format. With Echo I want that we can customize the way our logs are print to the console. Therefor I need a way to describe/define a log format." />
+		<meta name="robots" content="Index,Follow" />
+		<meta name="viewport" content="initial-scale=1.0" />
+
+		<title>Building Echo - Customizable log format - clmntcrl</title>
+
+		<link rel="stylesheet" href="/css/style.css">
+	</head><body>
+		<section id="w" class="post">
+			<nav><a href="/">clmntcrl.io</a> / <a href="/blog/">Blog</a> /</nav>
+			<section>
+<header><h1><a href="/blog/building-echo-customizable-log-format/">Building Echo<br />Customizable log format</a></h1><time pubdate="2015-01-05 00:00:00 +0100">Jan 05 2015</time></header>
+<p>This is the first blog post of the &laquo; Building Echo &raquo; series. In this series I write about how I build Echo framework, the issues I encountered and how I solved them.</p>
+<p>Let's begin with Echo format. With Echo I want that we can customize the way our logs are print to the console. Therefor I need a way to describe/define a log format.</p>
+<hr />
+<p>Observing a log I start by define Echo format as a string in which we have datetime, flag, filename, function name, line number, log message, ... We will name them Echo components to be coherent with the acoustic vocabulary I used for Echo.</p>
+<script src="https://gist.github.com/clmntcrl/26196ce2c8b2d5e4a3a6.js"></script>
+<p>We could make this nicer using <code>enum</code> and <code>Printable</code> protocol.</p>
+<script src="https://gist.github.com/clmntcrl/13ca14b34feef49cd8d0.js"></script>
+<p>Well! Now we just have to call <code>format.stringByReplacingOccurrencesOfString()</code> for each values of <code>EchoComponent</code> and then print the result to the console.</p>
+<p>Ok! It works, but I think we can do better.</p>
+<p>Last I said that <q>Echo format is a string in which we have Echo components</q>. Finally, I'm not agree with the word <q>string</q>.<br />First it doesn't provide any information on what composes Echo format (on this subject I encourage you to throw a glance at <a href="https://twitter.com/ScottWlaschin/" target="_blank">Scott Wlaschin</a> talk about <a href="https://skillsmatter.com/skillscasts/4971-domain-driven-design-with-scott-wlaschin" target="_blank">Domain Driven Design, F# and Types</a>, most concepts can be applied to Swift).<br />Next we call <code>stringByReplacingOccurrencesOfString()</code> too many times to obtain the string to print, and that sucks 👎.</p>
+<hr />
+<p>Let's restart.</p>
+<p>What is left if we remove Echo components from Echo format previous definition? Separators.<br />So <code>Separator</code> is a good candidate to join Echo components. However <code>Separator</code> must have different value each time it is used (because we don't use the same separator between <code>Filename</code> and <code>Line</code> as between <code>Line</code> and <code>Message</code>).<br />Hopefully we have Swift stuff for that.</p>
+<blockquote>
+    <p>It is sometimes useful to be able to store associated values of other types alongside these member values. This enables you to store additional custom information along with the member value, and permits this information to vary each time you use that member in your code.<span class="quote-src"><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html" target="_blank">The Swift Programming Language</a>, Apple.</span></p>
+</blockquote>
+<p>Our Echo format now look like this:</p>
+<script src="https://gist.github.com/clmntcrl/6b4508cf2a326bfb0043.js"></script>
+<p>Wow! This code is more readable. Defining Echo format as an array of <code>EchoComponent</code> make more sense, reading its declaration we axacly know how it is composed and how we can use it.</p>
+<p>We can go further and add the possibility to modify flags and datetime format using the same way, 😎.</p>
+<script src="https://gist.github.com/clmntcrl/64681bfaad3760453d8b.js"></script>
+<p>Now I think we can't do better. This code is concise, readable and we can add others <code>EchoComponent</code> if we need. Moreover, work with Echo format to obtain the log to print is nicer and easier, we just have to print the result of <code>format.map({...}).reduce("", combine: +)</code> (cf. Echo log method on <a href="https://github.com/clmntcrl/Echo/blob/master/Echo/Echo.swift#L107" target="_blank">GitHub</a>).</p>
+<hr />
+<p>This is the end of my first post of the &laquo; Building Echo &raquo; series, I hope you liked it and appreciate that you have read it. If you have any comments or suggestions, please feel free to contact me on my <a href="https://twitter.com/clmntcrl" target="_blank">Twitter</a>.</p>
+<p>You can find Echo project sources on <a href="https://github.com/clmntcrl/Echo" target="_blank">GitHub</a>.</p>
+<p>See you soon for the next episode. !)</p>
+			</section>
+		</section>
+	</body>
+</html>
