@@ -110,6 +110,29 @@ a {
 	border-color: #bf626b;
 	color: #bf626b;
 }
+
+ol {
+	list-style: none;
+	counter-reset: item;
+	position: relative;
+	margin: .5em 3rem;
+}
+ol li {
+	position: relative;
+	margin: .5em 0;
+}
+ol li:before {
+	position: absolute;
+	right: 102%;
+	top: 0.1em;
+	content: counter(item) '.';
+	counter-increment: item;
+	color: #4f5b66;
+	font-size: 1rem;
+	font-weight: 600;
+	text-align: right;
+}
+
 .posts li {
 	list-style: none;
 	position: relative;
