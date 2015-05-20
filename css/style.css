@@ -19,7 +19,7 @@ body {
 #w {
 	display: table-cell;
 	width: 640px;
-	padding: 60px 10px;
+	padding: 60px;
 	vertical-align: middle;
 }
 #w.post { width: 980px; }
