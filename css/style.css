@@ -12,9 +12,9 @@ body {
 	display: table;
 	height: 100%;
 	margin: 0 auto;
-	color: #c0c5cf;
-	background-color: #2b303b;
-	font: 300 1.1em/1.6 "Myriad Set Pro", 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', Tahoma, Verdana, sans-serif;
+	color: black;
+	background-color: white;
+	font: 400 1.3em/1.6 Arial, sans-serif;
 }
 #w {
 	display: table-cell;
@@ -22,93 +22,83 @@ body {
 	padding: 80px 60px;
 	vertical-align: middle;
 }
-#w.post { width: 980px; }
+#w.post { width: 1024px; }
 nav {
 	position: absolute;
 	left: 2em;
 	top: 1em;
-	color: #4f5b66;
+	color: #ccc;
 	font-size: .7em;
 }
-nav a { color: inherit; }
+nav a {
+	border: 0;
+	font-family: inherit;
+	letter-spacing: normal;
+	color: inherit;
+	background-color: inherit;
+}
 header { margin-bottom: 2.71em; }
 footer { margin-top: 3.14em; }
 
-h1 {
-	position: relative;
-	font-size: 2.71em;
-	font-weight: 700;
+h1, h2, h3, strong {
+	font-family: 'Arial Black', Arial, sans-serif;
+	letter-spacing: -0.07em;
 }
-h1:before {
-	position: absolute;
-	right: 103%;
-	top: 1.1em;
-	content: '#';
-	color: #4f5b66;
-	font-size: .5em;
-	font-weight: 600;
-	text-align: right;
+h1 {
+	padding: 0;
+	text-transform : uppercase;
+	font-size: 2.71em;
+}
+h1 a:hover {
+	color: white;
+	background-color: black;
 }
 h2 {
 	position: relative;
 	margin: 2em 0 1em;
 	font-size: 1.7em;
-	font-weight: 400;
+	text-transform : uppercase;
+	color: black;
+	background-color: transparent;
 }
-h2:before {
-	position: absolute;
-	right: 103%;
-	top: 1.15em;
-	content: '##';
-	color: #4f5b66;
-	font-size: .5em;
-	font-weight: 600;
-	text-align: right;
+h2 a {
+	color: inherit;
+	background-color: inherit;
 }
 h3,
 .archives h2 {
 	position: relative;
 	margin: 1em 0 .5em;
 	font-size: 1.2em;
-	font-weight: 400;
-}
-h3:before {
-	position: absolute;
-	right: 103%;
-	top: 1.15em;
-	content: '###';
-	color: #4f5b66;
-	font-size: .5em;
-	font-weight: 600;
-	text-align: right;
 }
 
 time {
-	color: #4f5b66;
+	color: #ccc;
 	font-size: .7em;
 }
 p { margin: 1em 0; }
-strong { font-weight: 600; }
+strong {
+	font-size: 1.1em;
+	font-weight: 800;
+}
 hr {
 	width: 45%;
 	border: none;
-	border-bottom: 1px #4f5b66 solid;
+	border-bottom: 1px #ccc solid;
 	margin: 2em auto;
 }
 a {
-	color: #bf626b;
+	padding: 0 0.25em;
+	border: 0.2em solid black;
+	color: white;
+	background-color: black;
+	font-family: 'Arial Black', Arial, sans-serif;
+	letter-spacing: -0.07em;
 	text-decoration: none;
 }
-
-.btn {
-	padding: .2em 1em;
-	border: 1px solid #4f5b66;
-	border-radius: 4px;
-	color: #4f5b66;
-}
-.btn:hover {
-	border-color: #bf626b;
-	color: #bf626b;
+a:hover {
+	color: black;
+	background-color: white;
 }
 
 ol {
@@ -124,10 +114,10 @@ ol li {
 ol li:before {
 	position: absolute;
 	right: 102%;
-	top: 0.1em;
+	top: 0.4rem;
 	content: counter(item) '.';
 	counter-increment: item;
-	color: #4f5b66;
+	color: #ccc;
 	font-size: 1rem;
 	font-weight: 600;
 	text-align: right;
@@ -141,24 +131,29 @@ ol li:before {
 .posts li:before {
 	position: absolute;
 	right: 103%;
-	top: .25em;
+	top: .5rem;
 	content: '*';
-	color: #4f5b66;
+	color: #ccc;
 	font-size: 1.1rem;
 	font-weight: 600;
 	text-align: right;
 }
-.posts li a { color: inherit; }
-.posts li a:hover { color: #bf626b; }
-.posts time {
-	position: absolute;
-	right: 0;
-	bottom: .2em
+.posts li a {
+	border-color: white;
+	color: inherit;
+	background-color: transparent;
+	font-family: inherit;
 }
+.posts li a:hover {
+	border-color: black;
+	color: white;
+	background-color: black;
+}
+.posts time { margin-left: 0.3em; }
 
 blockquote {
 	margin: 1rem 6rem;
-	color: #4f5b66;
+	color: #ccc;
 	font-style: italic;
 }
 .quote-src {
@@ -168,26 +163,22 @@ blockquote {
 }
 .quote-src:before { content: "— "; }
 
+.twitter-tweet { margin: 1rem auto; }
+
 .gist,
-pre { 
+pre {
     padding: .5rem 1rem;
     margin: 1rem 3rem;
 }
 pre {
 	border-radius: 3px;
 	overflow-y: auto;
-	background: #f0f2f5;
+	background: #f9f9f9;
 }
 code {
-	color: #8fa1b2;
+	color: #666;
 	font: 1em/1.6 monospace;
 }
 pre code {
-	color: #64727d;
-}
-
-
-::selection {
-	color: #fff;
-	background-color: #bf626b;
+	color: #666;
 }
