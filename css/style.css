@@ -14,7 +14,7 @@ body {
 	margin: 0 auto;
 	color: black;
 	background-color: white;
-	font: 400 1.3em/1.6 Arial, sans-serif;
+	font: 400 21px/1.6 Arial, sans-serif;
 }
 #w {
 	display: table-cell;
@@ -25,10 +25,12 @@ body {
 #w.post { width: 1024px; }
 nav {
 	position: absolute;
-	left: 2em;
+	left: 1em;
 	top: 1em;
 	color: #ccc;
 	font-size: .7em;
+	transform-origin: bottom left;
+	transform: rotate(90deg);
 }
 nav a {
 	border: 0;
