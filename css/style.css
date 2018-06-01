@@ -18,11 +18,11 @@ body {
 }
 #w {
 	display: table-cell;
-	width: 640px;
+	width: 750px;
+	max-width: 750px;
 	padding: 80px 60px;
 	vertical-align: middle;
 }
-#w.post { width: 1024px; }
 nav {
 	position: absolute;
 	left: 1em;
@@ -84,10 +84,10 @@ strong {
 	font-weight: 800;
 }
 hr {
-	width: 45%;
+	width: 3em;
 	border: none;
-	border-bottom: 1px #ccc solid;
-	margin: 2em auto;
+	border-bottom: 0.3em black solid;
+	margin: 3em auto;
 }
 a {
 	padding: 0 0.25em;
@@ -175,14 +175,18 @@ pre {
 pre {
 	border-radius: 5px;
 	overflow-y: auto;
-	background: #f9f9f9;
+	background-color: #f7f7f7;
 }
 code {
+	padding: 0.25em 0.5em;
+	border-radius: 5px;
 	color: #666;
-	font: 1em/1.6 monospace;
+	background-color: #f7f7f7;
+	font: 0.7em/1 monospace;
 }
 pre code {
-	color: #666;
+	padding: 0;
+	background-color: transparent;
 }
 
 .gist a {
