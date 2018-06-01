@@ -171,7 +171,7 @@ pre {
     margin: 1rem 3rem;
 }
 pre {
-	border-radius: 3px;
+	border-radius: 5px;
 	overflow-y: auto;
 	background: #f9f9f9;
 }
@@ -181,4 +181,10 @@ code {
 }
 pre code {
 	color: #666;
+}
+
+.gist a {
+	background-color: inherit;
+	font-family: inherit;
+	letter-spacing: normal;
 }
