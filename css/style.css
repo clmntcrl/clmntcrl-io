@@ -20,7 +20,7 @@ body {
 	display: table-cell;
 	width: 750px;
 	max-width: 750px;
-	padding: 80px 60px;
+	padding: 4em 6em;
 	vertical-align: middle;
 }
 nav {
@@ -168,11 +168,9 @@ blockquote {
 .twitter-tweet { margin: 1rem auto; }
 
 .gist,
+pre { margin: 1em -4rem; }
 pre {
-    padding: .5rem 1rem;
-    margin: 1rem 3rem;
-}
-pre {
+	padding: .5em 1em;
 	border-radius: 5px;
 	overflow-y: auto;
 	background-color: #f7f7f7;
