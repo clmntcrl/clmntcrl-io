@@ -18,9 +18,30 @@
 <p>With Echo I want that we can customize the way our logs are print to the console. Therefor I need a way to describe/define a log format.</p>
 <hr />
 <p>Observing a log I start by define Echo format as a string in which we have datetime, flag, filename, function name, line number, log message, ... We will name them Echo components to be coherent with the acoustic vocabulary I used for Echo.</p>
-<script src="https://gist.github.com/clmntcrl/26196ce2c8b2d5e4a3a6.js"></script>
+<pre><code><span>struct</span> Echo {
+    <span>var</span> format = "[flag] [[datetime]] [[filename]:[line]] [message]"
+}</code></pre>
 <p>We could make this nicer using <code>enum</code> and <code>Printable</code> protocol.</p>
-<script src="https://gist.github.com/clmntcrl/13ca14b34feef49cd8d0.js"></script>
+<pre><code><span>enum</span> EchoComponent {
+    <span>case</span> DateTime
+    <span>case</span> Flag
+    <span>case</span> Filename
+    <span>case</span> Function
+    <span>case</span> Line
+    <span>case</span> case Message
+}
+<span>extension</span> EchoComponent: <span>Printable</span> {
+    <span>public var</span> description: <span>String</span> {
+        <span>switch self</span> {
+            <span>case</span> .DateTime: <span>return</span> "[datetime]"
+            <span>case</span> .Flag: <span>return</span> "[flag]"
+            <span>case</span> .Filename: <span>return</span> "[filename]"
+            <span>case</span> .Function: <span>return</span> "[function]"
+            <span>case</span> .Line: <span>return</span> "[line]"
+            <span>case</span> .Message: <span>return</span> "[message]"
+        }
+    }
+}</code></pre>
 <p>Well! Now we just have to call <code>format.stringByReplacingOccurrencesOfString()</code> for each values of <code>EchoComponent</code> and then print the result to the console.</p>
 <p>Ok! It works, but I think we can do better.</p>
 <p>Last I said that <q>Echo format is a string in which we have Echo components</q>. Finally, I'm not agree with the word <q>string</q>.<br />First it doesn't provide any information on what composes Echo format (on this subject I encourage you to throw a glance at <a href="https://twitter.com/ScottWlaschin/" target="_blank">Scott Wlaschin</a> talk about <a href="https://skillsmatter.com/skillscasts/4971-domain-driven-design-with-scott-wlaschin" target="_blank">Domain Driven Design, F# and Types</a>, most concepts can be applied to Swift).<br />Next we call <code>stringByReplacingOccurrencesOfString()</code> too many times to obtain the string to print, and that sucks 👎.</p>
@@ -31,10 +52,52 @@
     <p>It is sometimes useful to be able to store associated values of other types alongside these member values. This enables you to store additional custom information along with the member value, and permits this information to vary each time you use that member in your code.<span class="quote-src"><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html" target="_blank">The Swift Programming Language</a>, Apple.</span></p>
 </blockquote>
 <p>Our Echo format now look like this:</p>
-<script src="https://gist.github.com/clmntcrl/6b4508cf2a326bfb0043.js"></script>
+<pre><code><span>enum</span> EchoComponent {
+    <span>case</span> Datetime
+    <span>case</span> Flag
+    <span>case</span> Filename
+    <span>case</span> Function
+    <span>case</span> Line
+    <span>case</span> Message
+    <span>case</span> Separator(<span>String</span>)
+}</code></pre>
+<pre><code><span>struct</span> Echo {
+    <span>var</span> format: [<span>EchoComponent</span>] = [
+        .Flag,
+        .Separator(" ["),
+        .Datetime,
+        .Separator("] ["),
+        .Filename,
+        .Separator(":"),
+        .Line,
+        .Separator("] "),
+        .Message
+    ]
+}</code></pre>
 <p>Wow! This code is more readable. Defining Echo format as an array of <code>EchoComponent</code> make more sense, reading its declaration we axacly know how it is composed and how we can use it.</p>
 <p>We can go further and add the possibility to modify flags and datetime format using the same way, 😎.</p>
-<script src="https://gist.github.com/clmntcrl/64681bfaad3760453d8b.js"></script>
+<pre><code><span>enum</span> EchoComponent {
+    <span>case</span> Datetime(format: <span>String</span>)
+    <span>case</span> Flag(flags: [<span>EchoLevel</span>: <span>EchoFlag</span>])
+    <span>case</span> Filename
+    <span>case</span> Function
+    <span>case</span> Line
+    <span>case</span> Message
+    <span>case</span> Separator(<span>String</span>)
+}</code></pre>
+<pre><code><span>struct</span> Echo {
+    <span>var</span> format: [<span>EchoComponent</span>] = [
+        .Flag(flags: [.Trace: "💊", .Debug:  "☕️", .Info: "💡", .Warn: "⚠️", .Error: "❌", .Fatal: "💣", .Off: "😶"]),
+        .Separator(" ["),
+        .Datetime(format: "HH:mm:ss.SSS"),
+        .Separator("] ["),
+        .Filename,
+        .Separator(":"),
+        .Line,
+        .Separator("] "),
+        .Message
+    ]
+}</code></pre>
 <p>Now I think we can't do better. This code is concise, readable and we can add others <code>EchoComponent</code> if we need. Moreover, work with Echo format to obtain the log to print is nicer and easier, we just have to print the result of <code>format.map({...}).reduce("", combine: +)</code> (cf. Echo log method on <a href="https://github.com/clmntcrl/Echo/blob/master/Echo/Echo.swift#L107" target="_blank">GitHub</a>).</p>
 <hr />
 <p>This is the end of my first post of the &laquo; Building Echo &raquo; series, I hope you liked it and appreciate that you have read it. If you have any comments or suggestions, please feel free to contact me on my <a href="https://twitter.com/clmntcrl" target="_blank">Twitter</a>.</p>
