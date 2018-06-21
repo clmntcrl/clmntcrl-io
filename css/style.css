@@ -153,6 +153,11 @@ ol li:before {
 }
 .posts time { margin-left: 0.3em; }
 
+.post header {
+	margin-left: -4em;
+	margin-right: -4em;
+}
+
 blockquote {
 	margin: 1rem 6rem;
 	color: #ccc;
