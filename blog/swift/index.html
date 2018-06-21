@@ -24,182 +24,182 @@
 <p><strong>Updated</strong> (Jul 15 2014) to adopt new Swift syntax after its first <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html" target="_blank">revision</a>.</p>
 <hr />
 <h2 id="simple-value"><a href="#simple-value">Simple value</a></h2>
-<pre><code>let constant = 1
-var variable = 1</code></pre>
+<pre><code><span>let</span> constant = 1
+<span>var</span> variable = 1</code></pre>
 <p>Type of a variable (or constant) is infered by the compiler when providing a value. Type can be specified like this:</p>
-<pre><code>let explicitDouble: Double = 2</code></pre>
+<pre><code><span>let</span> explicitDouble: <span>Double</span> = 2</code></pre>
 <p>Value are never implicitly converted to another type.</p>
-<pre><code>var lineLabel = "Line " + String(3)
+<pre><code><span>var</span> lineLabel = "Line " + String(3)
 
-// Simpler way to include value in strings
+<span>// Simpler way to include value in strings</span>
 
 lineLabel = "Line \(5)"</code></pre>
 <p>Arrays and dictionaries use brackets (<code>[]</code>).</p>
-<pre><code>var array = [
+<pre><code><span>var</span> array = [
 	"an element",
 	"another element"
 ]
 array += "last element"
 
-var dictionary = [
+<span>var</span> dictionary = [
 	"a key": "an element",
 	"another key": "another value"
 ]
 dictionary["a key"] = "I'am an element"
 
-// Empty  array or dictionary
+<span>// Empty  array or dictionary</span>
 
-let emptyArray = [String]()
-let emptyDictionary = [String: String]()</code></pre>
+<span>let</span> emptyArray = [<span>String</span>]()
+<span>let</span> emptyDictionary = [<span>String</span>: <span>String</span>]()</code></pre>
 <h2 id="control-flow"><a href="#control-flow">Control flow</a></h2>
 <p>Parentheses around the condition or loop variable are optional. Braces around the body are required.</p>
 <p>Condition in an <code>if</code> statement must be a boolean expression. <code>?</code> can be used after the type of a value to mark it as optional.</p>
-<pre><code>var optionalInt: Int?
+<pre><code><span>var</span> optionalInt: <span>Int?</span>
 
-if !optionalInt {
+<span>if</span> !optionalInt {
 	optionalInt = 8
 }</pre></code>
 <p>Switches support any kind of data and wide variety of comparison operations. <code>break</code> are implicit.</p>
-<pre><code>let day = "Friday"
+<pre><code><span>let</span> day = "Friday"
 
-switch day {
-case "Monday":
+<span>switch</span> day {
+<span>case</span> "Monday":
     "Not my favorite day"
-case "Thursday", "Wednesday", "Tuesday":
+<span>case</span> "Thursday", "Wednesday", "Tuesday":
     "When is the weekend ?"
-case let d where d.uppercaseString == "FRIDAY":
+<span>case let</span> d <span>where</span> d.uppercaseString == "FRIDAY":
     "Weekend is coming soon..."
-case"Saturday", "Sunday":
+<span>case</span> "Saturday", "Sunday":
     "😎"
-default:
+<span>default</span>:
     "Not a day"
 }</pre></code>
 <h2 id="functions"><a href="#functions">Functions</a></h2>
-<pre><code>func addOneTo(number: Int) -> Int {
-    return number + 1
+<pre><code><span>func</span> addOneTo(number: <span>Int</span>) -> <span>Int</span> {
+    <span>return</span> number + 1
 }</pre></code>
 <p>Function can return multiple values using <code>tuples</code>.</p>
-<pre><code>func prices() -> (Double, Double, Double) {
-    return (0.0, 0.99, 1.29)
+<pre><code><span>func</span> prices() -> (<span>Double</span>, <span>Double</span>, <span>Double</span>) {
+    <span>return</span> (0.0, 0.99, 1.29)
 }</pre></code>
 <p>Function can take a variable number of arguments.</p>
-<pre><code>func sumOf(numbers: Int...) -> Int {
-    var sum = 0
-    for number in numbers {
+<pre><code><span>func</span> sumOf(numbers: <span>Int...</span>) -> <span>Int</span> {
+    <span>var</span> sum = 0
+    <span>for</span> number <span>in</span> numbers {
         sum += number
     }
-    return sum
+    <span>return</span> sum
 }</pre></code>
 <p>Function can be nested.</p>
 <p>Functions accept functions as arguments and return value.</p>
-<pre><code>func getMyFunc(function: (Int, Int) -> Int) -> ((Int, Int) -> Int) {
-    return function
+<pre><code><span>func</span> getMyFunc(function: (<span>Int</span>, <span>Int</span>) -> <span>Int</span>) -> ((<span>Int</span>, <span>Int</span>) -> <span>Int</span>) {
+    <span>return</span> function
 }</pre></code>
 <h2 id="closures"><a href="#closures">Closures</a></h2>
-<pre><code>var numbers = [13, 21, 34, 55]
+<pre><code><span>var</span> numbers = [13, 21, 34, 55]
 
 numbers.map({
-    (number: Int) -> Int in
-    return number * 2
+    (number: Int) -> Int <span>in</span>
+    <span>return</span> number * 2
 })
-numbers.map({ number in number * 2 })
+numbers.map({ number <span>in</span> number * 2 })
 numbers.map({ $0 * 2 })
 numbers.map() { $0 * 2 }
 numbers.map { $0 * 2 }
 
-// [26, 42, 68, 110]</pre></code>
+<span>// [26, 42, 68, 110]</span></pre></code>
 <h2 id="objects-and-classes"><a href="#objects-and-classes">Objects and Classes</a></h2>
 <p>Methods that override the superclass's implementation are mark with <code>override</code>.</p>
 <p>Methods can specify a second name for parameters, which is used inside the method.</p>
-<pre><code>class Counter {
-    var count: Int
+<pre><code><span>class</span> Counter {
+    <span>var</span> count: <span>Int</span>
 
     init() {
         count = 0
     }
-    func incrementBy(amount: Int, numberOfTimes times: Int) {
+    <span>func</span> incrementBy(amount: <span>Int</span>, numberOfTimes times: <span>Int</span>) {
         count += amount * times
     }
 }
 
-var counter = Counter()
-counter.incrementBy(2, numberOfTimes:1_024)</code></pre>
+<span>var</span> counter = Counter()
+counter.incrementBy(2, numberOfTimes: 1_024)</code></pre>
 <h2 id="enumerations-and-structures"><a href="#enumerations-and-structures">Enumerations and structures</a></h2>
 <p>Enumerations can have methods associated with them.</p>
 <p>An instance of an enumeration member can have values associated with the instance:</p>
-<pre><code>enum ServerResponse {
-    case Result(String, String)
-    case Error(String)
+<pre><code><span>enum</span> ServerResponse {
+    <span>case</span> Result(<span>String</span>, <span>String</span>)
+    <span>case</span> Error(<span>String</span>)
 }
 ServerResponse.Result("200", "OK")</code></pre>
 <p>Structures support many of the same behaviors as classes, including methods and initializers. Structures are always passed by copy while classes are passed by reference.</p>
-<pre><code>struct Point {
-    var x: Int
-    var y: Int
+<pre><code><span>struct</span> Point {
+    <span>var</span> x: <span>Int</span>
+    <span>var</span> y: <span>Int</span>
 
-    init(x: Int, y: Int) {
-        self.x = x
-        self.y = y
+    init(x: <span>Int</span>, y: <span>Int</span>) {
+        <span>self.</span>x = x
+        <span>self.</span>y = y
     }
-    func description() -> String {
-        return "Point: { x: \(x), y: \(y) }"
+    <span>func</span> description() -> <span>String</span> {
+        <span>return</span> "Point: { x: \(x), y: \(y) }"
     }
 }
 
-let p = Point(x:0, y:0)</pre></code>
+<span>let</span> p = Point(x:0, y:0)</pre></code>
 <h2 id="protocols-and-extensions"><a href="#protocols-and-extensions">Protocols and Extensions</a></h2>
 <p>Classes, enumerations, and structs can adopt protocols.</p>
-<pre><code>protocol PrintProtocol {
-    var description: String { get }
+<pre><code><span>protocol</span> PrintProtocol {
+    <span>var</span> description: <span>String</span> { <span>get</span> }
 
-    mutating func print()
+    <span>mutating func</span> print()
 }
 
-class PrintableClass: PrintProtocol {
-    var description: String = "Printable class"
+<span>class</span> PrintableClass: <span>PrintProtocol</span> {
+    <span>var</span> description: <span>String</span> = "Printable class"
 
-    func print() {
+    <span>func</span> print() {
         println(description)
     }
 }</code></pre>
 <p>Enumerations and structures need <code>mutating</code> keyword to mark a method that modifies the structure.</p>
-<pre><code>struct PrintableStruct: PrintProtocol {
-    var description: String = "Printable struct"
+<pre><code><span>struct</span> PrintableStruct: <span>PrintProtocol</span> {
+    <span>var</span> description: <span>String</span> = "Printable struct"
 
-    mutating func print() {
+    <span>mutating func</span> print() {
         println(description)
     }
 }</pre></code>
 <p>Extensions are used to add functionality to an existing type, such as methods and computed properties. Extensions can be used to add protocol conformance to a type.</p>
-<pre><code>extension Double {
-    func modulus() -> Double {
-        return abs(self)
+<pre><code><span>extension</span> Double {
+    <span>func</span> modulus() -> <span>Double</span> {
+        <span>return</span> abs(<span>self</span>)
     }
 }</code></pre>
 <h2 id="generics"><a href="#generics">Generics</a></h2>
 <p>Functions, methods, classes, enumerations and structures can be generic.</p>
-<pre><code>func repeat&lt;T&gt;(item: T, times: Int) -> [T] {
-    var result = [T]()
-    for i in 0 ..&lt; times {
+<pre><code><span>func</span> repeat&lt;T&gt;(item: <span>T</span>, times: <span>Int</span>) -> [<span>T</span>] {
+    <span>var</span> result = [T]()
+    <span>for</span> i <span>in</span> 0 ..&lt; times {
         result += item
     }
-    return result
+    <span>return</span> result
 }
 repeat("knock", 2)</code></pre>
 <p>Type can require to implement protocol, to be the same as an other type or to have a particular superclass.</p>
-<pre><code>func commonElements &lt;T, U where T: Sequence, U: Sequence,
-    T.GeneratorType.Element: Equatable,
+<pre><code><span>func</span> commonElements &lt;T, U <span>where</span> T: <span>Sequence</span>, U: <span>Sequence</span>,
+    T.GeneratorType.Element: <span>Equatable</span>,
     T.GeneratorType.Element == U.GeneratorType.Element&gt;
-    (lhs: T, rhs: U) -&gt; [T.GeneratorType.Element] {
-        var result = Array&lt;T.GeneratorType.Element&gt;()
-        for lhsItem in lhs {
-            for rhsItem in rhs {
-                if lhsItem == rhsItem {
+    (lhs: <span>T</span>, rhs: <span>U</span>) -&gt; [<span>T.GeneratorType.Element</span>] {
+        <span>var</span> result = Array&lt;<span>T.GeneratorType.Element</span>&gt;()
+        <span>for</span> lhsItem <span>in</span> lhs {
+            <span>for</span> rhsItem <span>in</span> rhs {
+                <span>if</span> lhsItem == rhsItem {
                     result += rhsItem
                 }
             }
         }
-        return result
+        <span>return</span> result
 }
 commonElements([1, 2, 3, 4], [2, 4, 6])</code></pre>
 <hr />

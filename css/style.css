@@ -173,7 +173,7 @@ blockquote {
 .twitter-tweet { margin: 1rem auto; }
 
 .gist,
-pre { margin: 1em -4rem; }
+pre { margin: 1.5em -4em 2.5em; }
 pre {
 	padding: .5em 1em;
 	border-radius: 5px;
@@ -191,6 +191,7 @@ pre code {
 	padding: 0;
 	background-color: transparent;
 }
+pre code span { color: #999; }
 
 .gist a {
 	background-color: inherit;
