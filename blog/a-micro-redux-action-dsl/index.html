@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="CLÉMENT Cyril" />
+		<meta name="description" content="A micro Redux action DSL." />
+		<meta name="robots" content="Index,Follow" />
+		<meta name="viewport" content="width=1024" />
+
+		<title>A micro Redux action DSL - clmntcrl</title>
+
+		<link rel="stylesheet" href="/css/style.css">
+	</head><body>
+		<section id="w" class="post">
+			<nav><a href="/">clmntcrl.io</a> / <a href="/blog/">Blog</a> / <a href="/blog/a-micro-redux-action-dsl/">A micro Redux action DSL</a></nav>
+			<section>
+<header><h1><a href="/blog/a-micro-redux-action-dsl/">A micro Redux action DSL</a></h1><time pubdate="2018-06-21 00:00:00 +0100">Jun 21 2018</time></header>
+<p></p>
+<h2 id="a-dsl-what-the-hell-is-that"><a href="#a-dsl-what-the-hell-is-that">A DSL? What the hell is that?</a></h2>
+<p>DSL: Domain Specific Language.</p>
+<blockquote>
+	<p>A computer programming language of <strong>limited expressiveness</strong> focused on a <strong>particular domain</strong>.<span class="quote-src">Martin Fowler</span></p>
+</blockquote>
+<h2 id="ok-but-what-does-it-look-like"><a href="#ok-but-what-does-it-look-like">Ok, but what does it look like?</a></h2>
+<p></p>
+<pre><code>action(onUserProfile("UPDATE_AVATAR"), optimistic, persistable)</code></pre>
+<pre><code><span>const</span> Actions = {
+    <span>...</span>action(onUserProfile("UPDATE_PSEUDO"), failable),
+    <span>// ...</span>
+}</code></pre>
+<p></p>
+<pre><code><span>▾</span> {
+    <span>▾</span> USER_PROFILE__UPDATE_PSEUDO: (payload = {}) => ({ type, <span>...</span>payload })
+        type: "USER_PROFILE__UPDATE_PSEUDO"
+    <span>▾</span> USER_PROFILE__UPDATE_PSEUDO_SUCCESS: (payload = {}) => ({ type, <span>...</span>payload })
+        type: "USER_PROFILE__UPDATE_PSEUDO_SUCCESS"
+    <span>▾</span> USER_PROFILE__UPDATE_PSEUDO_FAILURE: (payload = {}) => ({ type, <span>...</span>payload })
+        type: "USER_PROFILE__UPDATE_PSEUDO_FAILURE"
+}</code></pre>
+<h2 id="how-can-this-help"><a href="#how-can-this-help">How can this help?</a></h2>
+<ul>
+	<li>You write less code</li>
+	<li>It enforce action type naming convention</li>
+	<li><strike>Auto-completion (in reducers, action dispatch, ...)</strike> ← Need some test to know why it doesn't work 🤔 and how to fix it. Could be due to the use of computed property name...</li>
+</ul>
+<pre><code>store.dispatch(Actions.USER_PROFILE__UPDATE_PSEUDO({ pseudo: "CtrlAltZ" }))
+
+<span>const</span> reducer = (state = initialState, action) => {
+    <span>switch</span> (action.type) {
+        <span>case</span> Actions.USER_PROFILE__UPDATE_PSEUDO.type:
+            <span>return</span> { <span>/* ... */</span> }
+        <span>case</span> Actions.USER_PROFILE__UPDATE_PSEUDO_SUCCESS.type:
+            <span>return</span> { <span>/* ... */</span> }
+        <span>case</span> Actions.USER_PROFILE__UPDATE_PSEUDO_FAILURE.type:
+            <span>return</span> { <span>/* ... */</span> }
+        <span>default</span>:
+            <span>return</span> state
+    }
+}</code></pre>
+<h2 id="code"><a href="#code">Code</a></h2>
+<p>Core:</p>
+<pre><code><span>const</span> action = (type, <span>...</span>descriptors) => {
+    <span>const</span> actionCreator = (payload = {}) => ({ type, <span>...</span>payload })
+    actionCreator.type = type
+    <span>return</span> {
+        [type]: actionCreator,
+        <span>...</span>descriptors.reduce(
+            (actions, descriptor) => ({ <span>...</span>actions, <span>...</span>descriptor(type) }),
+            {}
+        ),
+    }
+}
+<span>const</span> on = (scope) => (type) => `${scope}__${type}`</code></pre>
+<p>Action descriptors:</p>
+<pre><code><span>const</span> failable = (type) => ({
+    <span>...</span>action(`${type}_FAILURE`),
+    <span>...</span>action(`${type}_SUCCESS`),
+})
+<span>const</span> optimistic = (type) => ({
+    <span>...</span>action(type, failable),
+    <span>...</span>action(`${type}_OPTIMISTICALLY`),
+})
+<span>const</span> persistable = (type) => action(`${type}_PERSIST`)</code></pre>
+<p>Action type scopes:</p>
+<pre><code><span>const</span> onPost = on("POST")
+<span>const</span> onUserProfile = on("USER_PROFILE")</code></pre>
+			</section>
+		</section>
+	</body>
+</html>
