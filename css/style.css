@@ -25,7 +25,7 @@ body {
 }
 nav {
 	position: absolute;
-	left: 1em;
+	left: 0.5em;
 	top: 1em;
 	color: #ccc;
 	font-size: .7em;
