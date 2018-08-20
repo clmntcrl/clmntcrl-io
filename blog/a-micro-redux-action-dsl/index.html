@@ -102,8 +102,9 @@
     <li>You could customize the DSL for your specific cases adding as much action descriptor and scopes as you want</li>
 </ul>
 <h2 id="unfortunately"><a href="#unfortunately">Unfortunately 😢</a></h2>
-<p>There is a major downside with the current implentation of this action DSL, code-completion (in reducers and action dispatch) doesn't work because of the use of computed property name.</p>
+<p>There is a major downside with the current implentation of this action DSL, code-completion (in reducers and action dispatch) doesn't work because of the use of expando pattern and computed property name.</p>
 <p>It certainly depend on the IDE you are using but all I have tested don't auto-complete <code>Actions. </code>. This is due to how code analysis is performed.<br />Using static analysis rather than an execution engine make certain JavaScript pattern hard to detect (for information of the differences, see <a href="https://github.com/Microsoft/TypeScript/issues/4789" target="_blank">here</a>).</p>
+<p>If you have any idea to fix code-completion feel free to open an <a href="https://github.com/clmntcrl/clmntcrl-io/issues/new" target="_blank">issue</a>.</p>
 			</section>
 		</section>
 	</body>
