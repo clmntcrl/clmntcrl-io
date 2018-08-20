@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="CLÉMENT Cyril" />
+		<meta name="description" content="A micro Redux action DSL." />
+		<meta name="robots" content="Index,Follow" />
+		<meta name="viewport" content="width=1024" />
+
+		<title>A micro Redux action DSL - clmntcrl</title>
+
+		<link rel="stylesheet" href="/css/style.css">
+	</head><body>
+		<section id="w" class="post">
+			<nav><a href="/">clmntcrl.io</a> / <a href="/blog/">Blog</a> / <a href="/blog/a-micro-redux-action-dsl/">A micro Redux action DSL</a></nav>
+			<section>
+<header><h1><a href="/blog/a-micro-redux-action-dsl/">A micro Redux action DSL</a></h1><time pubdate="2018-08-20 00:00:00 +0100">Aug 20 2018</time></header>
+<p>There is a part of using Redux that has always tired me: writing <strong>actions</strong> and <strong>action creators</strong>. You know those repetitive lines of code you have to write:</p>
+<pre><code><span>export const</span> Actions = {
+    DO_SOMETHING: "DO_SOMETHING",
+}
+<span>export const</span> doSomething = (payload) => ({ type: Actions.DO_SOMETHING, payload })
+</code></pre>
+<p>And the worst is that most of the time you have actions that don't come alone because they are maybe failable. In that case you also have to write those same lines for <code>"DO_SOMETHING_SUCCESS"</code> and <code>"DO_SOMETHING_FAILURE"</code> actions 😞.</p>
+<p>The idea I'm tackling here, is to write a micro DSL to help you in this task.</p>
+<h2 id="a-dsl-what-the-hell-is-that"><a href="#a-dsl-what-the-hell-is-that">A DSL? What the hell is that?</a></h2>
+<p>DSL: Domain Specific Language.</p>
+<blockquote>
+	<p>A computer programming language of <strong>limited expressiveness</strong> focused on a <strong>particular domain</strong>.<span class="quote-src">Martin Fowler</span></p>
+</blockquote>
+<h2 id="ok-but-what-does-it-look-like"><a href="#ok-but-what-does-it-look-like">Ok, but what does it look like?</a></h2>
+<p>The DSL rely on small group of functions that generate actions, action creators, and associated actions using action descriptors. Let's have a look at a complete use case:</p>
+<pre><code><span>const</span> Actions = action(onUserProfile("UPDATE_PSEUDO"), failable)</code></pre>
+<p>This simple line of code generate for us the following object:</p>
+<pre><code><span>▾</span> {
+    <span>▾</span> USER_PROFILE__UPDATE_PSEUDO: (payload = {}) => ({ type, <span>...</span>payload })
+        type: "USER_PROFILE__UPDATE_PSEUDO"
+    <span>▾</span> USER_PROFILE__UPDATE_PSEUDO_SUCCESS: (payload = {}) => ({ type, <span>...</span>payload })
+        type: "USER_PROFILE__UPDATE_PSEUDO_SUCCESS"
+    <span>▾</span> USER_PROFILE__UPDATE_PSEUDO_FAILURE: (payload = {}) => ({ type, <span>...</span>payload })
+        type: "USER_PROFILE__UPDATE_PSEUDO_FAILURE"
+}</code></pre>
+<p>Which could be use to dispatch actions and test their type in our reducers like below:</p>
+<pre><code>store.dispatch(Actions.USER_PROFILE__UPDATE_PSEUDO({ pseudo: "CtrlAltZ" }))
+
+<span>const</span> reducer = (state = initialState, action) => {
+    <span>switch</span> (action.type) {
+        <span>case</span> Actions.USER_PROFILE__UPDATE_PSEUDO.type:
+            <span>return</span> { <span>/* ... */</span> }
+        <span>case</span> Actions.USER_PROFILE__UPDATE_PSEUDO_SUCCESS.type:
+            <span>return</span> { <span>/* ... */</span> }
+        <span>case</span> Actions.USER_PROFILE__UPDATE_PSEUDO_FAILURE.type:
+            <span>return</span> { <span>/* ... */</span> }
+        <span>default</span>:
+            <span>return</span> state
+    }
+}</code></pre>
+<h2 id="behind-the-scene"><a href="#behind-the-scene">Behind the scene</a></h2>
+<p>The core of our micro DSL is composed of 2 functions:</p>
+<ol>
+    <li><code>action()</code> generate an object containing action, action creator and enhance it using action descriptors</li>
+    <li><code>on()</code> allow us to create action scope to enforce action naming conventions</li>
+</ol>
+<pre><code><span>const</span> action = (type, <span>...</span>descriptors) => {
+    <span>const</span> actionCreator = (payload = {}) => ({ type, <span>...</span>payload })
+    actionCreator.type = type
+    <span>return</span> {
+        [type]: actionCreator,
+        <span>...</span>descriptors.reduce(
+            (actions, descriptor) => ({ <span>...</span>actions, <span>...</span>descriptor(type) }),
+            {}
+        ),
+    }
+}
+<span>const</span> on = (scope) => (type) => `${scope}__${type}`</code></pre>
+<p>With this couple of functions you we are able to customize the DSL for concrete cases. Starting with some usefull action descriptors:</p>
+<pre><code><span>const</span> failable = (type) => ({
+    <span>...</span>action(`${type}_FAILURE`),
+    <span>...</span>action(`${type}_SUCCESS`),
+})
+<span>const</span> optimistic = (type) => ({
+    <span>...</span>action(type, failable),
+    <span>...</span>action(`${type}_OPTIMISTICALLY`),
+})
+<span>const</span> persistable = (type) => action(`${type}_PERSIST`)</code></pre>
+<p>And some really context specific scopes:</p>
+<pre><code><span>const</span> onPost = on("POST")
+<span>const</span> onUserProfile = on("USER_PROFILE")</code></pre>
+<p>To end with clean and readable <code>action.js</code> file(s) like this:</p>
+<pre><code><span>export const</span> Actions = {
+    <span>...</span>action(onUserProfile("UPDATE_PSEUDO"), failable),
+    <span>...</span>action(onUserProfile("UPDATE_AVATAR"), optimistic, persistable),
+    <span>// ...</span>
+}</code></pre>
+
+
+<h2 id="awesome"><a href="#awesome">Awesome❗️</a></h2>
+<ul>
+    <li>You write less code</li>
+    <li>Code is more descriptive and readable</li>
+    <li>Action type naming convention is enforced</li>
+    <li>You could customize the DSL for your specific cases adding as much action descriptor and scopes as you want</li>
+</ul>
+<h2 id="unfortunately"><a href="#unfortunately">Unfortunately 😢</a></h2>
+<p>There is a major downside with the current implentation of this action DSL, code-completion (in reducers and action dispatch) doesn't work because of the use of expando pattern and computed property name.</p>
+<p>It certainly depend on the IDE you are using but all I have tested don't auto-complete <code>Actions. </code>. This is due to how code analysis is performed.<br />Using static analysis rather than an execution engine make certain JavaScript pattern hard to detect (for information of the differences, see <a href="https://github.com/Microsoft/TypeScript/issues/4789" target="_blank">here</a>).</p>
+<p>If you have any idea to fix code-completion feel free to open an <a href="https://github.com/clmntcrl/clmntcrl-io/issues/new" target="_blank">issue</a>.</p>
+			</section>
+		</section>
+	</body>
+</html>
