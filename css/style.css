@@ -125,6 +125,8 @@ ol li:before {
 	text-align: right;
 }
 
+.strikethrough { text-decoration: line-through; }
+
 .posts li {
 	list-style: none;
 	position: relative;
