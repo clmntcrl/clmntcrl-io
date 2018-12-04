@@ -47,9 +47,15 @@ h1, h2, h3, strong {
 	letter-spacing: -0.07em;
 }
 h1 {
-	padding: 0;
+	padding: 0 0.5em;
 	text-transform : uppercase;
 	font-size: 2.71em;
+}
+h1 a {
+	box-shadow: 0.5em 0 0 black, -0.5em 0 0 black;
+	padding: 0.15em 0;
+	border: 0;
+	margin-right: 0.5em;
 }
 h1 a:hover {
 	color: white;
