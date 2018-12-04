@@ -127,6 +127,44 @@ ol li:before {
 
 .strikethrough { text-decoration: line-through; }
 
+.app-icon {
+	position: relative;
+	width: 100px;
+	height: 100px;
+}
+.app-icon::before {
+	content: "";
+	position: absolute; left: 0;
+	width: 100px;
+	height: 100px;
+	z-index: 1;
+	background: url(/images/app-icons-mask-border.svg) center/cover no-repeat;
+}
+.app-icon img {
+	width: 100px;
+	height: 100px;
+	mask-image: url(/images/app-icons-mask.svg);
+	-webkit-mask-image: url(/images/app-icons-mask.svg);
+}
+
+.projects li {
+	display: inline-block;
+	padding: 0;
+	border: 0;
+	margin: 0 0.5em 0;
+	vertical-align: middle;
+}
+.projects li a {
+	display: block;
+	padding: 0;
+	border: 0;
+	margin: 0;
+	color: inherit;
+	background-color: transparent;
+	font-family: inherit;
+	letter-spacing: inherit;
+}
+
 .posts li {
 	list-style: none;
 	position: relative;
