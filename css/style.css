@@ -170,6 +170,10 @@ ol li:before {
 	font-family: inherit;
 	letter-spacing: inherit;
 }
+.projects li a:hover {
+	transform: scale(1.05);
+	transition: 0.2s ease-in-out;
+}
 
 .posts li {
 	list-style: none;
